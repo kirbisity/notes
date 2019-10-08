@@ -29,7 +29,7 @@ do
 	let t=t+2
 done
 
-images=("kirby" "creeper" "darksouls")
+images=("kirby" "creeper" "darksouls" "metaknight" "enderman")
 let i=0
 while [ $i -lt $n ];
 do
@@ -37,7 +37,7 @@ do
 	tmux send-keys -t $i "$sbash" C-m
 	color=`expr 41 + $i % 6`	
 	tmux send-keys -t $i "echo -e \"\e[${color}mThis is panel ${i}! \e[0m\"" C-m
-	tmux send-keys -t $i "avash ${images[`expr $i % 3`]}"
+	tmux send-keys -t $i "avash ${images[`expr $i % 5`]}"
 	tmux send-keys -t $i "$argcm" C-m
 	let i=i+1
 done
