@@ -38,7 +38,7 @@ do
 	color=`expr 41 + $i % 6`	
 	tmux send-keys -t $i "echo -e \"\e[${color}mThis is panel ${i}! \e[0m\"" C-m
 	path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/avatar/avatar.sh"
-	tmux send-keys -t $i "$path ${images[`expr $i % 5`]}"
+	tmux send-keys -t $i "$path ${images[`expr $i % 5`]}" C-m
 	tmux send-keys -t $i "$argcm" C-m
 	let i=i+1
 done
