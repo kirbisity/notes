@@ -182,3 +182,11 @@ Basic commands and their commonly used options. Look up man for more info.
   * `$$`  process id of current process
   * $!  process id of last background process
   * `$*` or `$@` or `"$*"` or `"$@"`  all command line arguments combined
+* Operators
+  * Relational Operator
+    * `-eq`  equal, same as ==
+    * `-ne`  not equal, same as !=
+    * `-gt`  greater, same as >
+    * `-lt`  less, same as <
+    * `-ge`  greater equal, same as >=
+    * `-le`  less equal, same as <=
