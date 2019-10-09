@@ -1,6 +1,6 @@
 carr=()
 draw=0
-input="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/data/$1.txt"
+input="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/images/$1.txt"
 while IFS= read -r line
 do
     if [[ $draw -eq 0 ]]
