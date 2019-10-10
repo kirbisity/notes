@@ -39,8 +39,16 @@ clear
 # draw the movie based on the sequence
 for f in $(echo $sequence | sed -e 's/\(.\)/\1\n/g')
 do
+    j=0
+    if [[ $f =~ [0-9] ]]
+    then
+        let j=$f
+    else
+	printf -v j "%d" "'$f"
+	let j=$((j - 87))
+    fi
     tput cup 2 0
-    for line in $(echo -e ${gparr[$f]})
+    for line in $(echo -e ${gparr[$j]})
     do
 	for i in $(echo $line | sed -e 's/\(.\)/\1\n/g')
         do
