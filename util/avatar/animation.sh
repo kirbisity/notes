@@ -1,42 +1,45 @@
-carr=()
 sequence=""
+carr=()
 gparr=()
-draw=0
-frame=0
 gpstr=""
 tput rc
-input="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/movies/$1.txt"
+input="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/movies/$1"
+# number of blank separated sessions
+section=0
 while IFS= read -r line
 do
-    if [[ $draw -eq 0 ]]
+    # blank lines separate sequence, color and picture sessions
+    if [[ $line == "" ]]
     then
-	if [[ $sequence == "" ]]
+        let section=section+1
+	if [[ $gpstr != "" ]]
         then
-	    sequence=$line
-	else
-	    carr+=($line)
+	    gparr+=($gpstr)
+	    gpstr=""
 	fi
+	continue
+    fi
+    # first section is frame sequence
+    if [[ $section -eq 0 ]]
+    then
+	sequence=$line 
+    # second section is color definition
+    elif [[ $section -eq 1 ]]
+    then
+	carr+=($line)
+    # the rest sections are all pictures
     elif [[ ${line[0]} != "" ]]
     then
 	gpstr="${gpstr}${line}\n"
     fi
-    if [[ $line == "" ]]
-    then
-	if [[ $draw -eq 0 ]]
-        then
-            let draw=1
-	fi
-	gparr+=($gpstr)
-	gpstr=""
-        let frame=frame+1
-    fi
-
-    let count=count+1
 done < "$input"
+gpstr=""
+
+clear
 # draw the movie based on the sequence
 for f in $(echo $sequence | sed -e 's/\(.\)/\1\n/g')
 do
-    tput cup 0 0
+    tput cup 2 0
     for line in $(echo -e ${gparr[$f]})
     do
 	for i in $(echo $line | sed -e 's/\(.\)/\1\n/g')
@@ -58,4 +61,4 @@ do
     gpstr=""
     sleep 0.1
 done
-#tput cup sc
+tput cup sc
