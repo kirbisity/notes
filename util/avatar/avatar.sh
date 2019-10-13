@@ -1,11 +1,19 @@
 carr=()
-draw=0
+section=0
 input="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/images/$1"
+echo $input
 while IFS= read -r line
 do
-    if [[ $draw -eq 0 ]]
+    # blank lines separate color and picture
+    if [[ $line == "" ]]
+    then
+        let section=section+1
+    fi
+    # first section is color definition
+    if [[ $section -eq 0 ]]
     then
         carr+=($line)
+    # second section is picture
     elif [[ ${line[0]} != "" ]]
     then
         for i in $(echo $line | sed -e 's/\(.\)/\1\n/g')
@@ -20,10 +28,6 @@ do
 	    fi
         done
         echo
-    fi
-    if [[ $line == "" ]]
-    then
-        let draw=1
     fi
     let count=count+1
 done < "$input"
