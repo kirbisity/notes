@@ -1,4 +1,3 @@
-#!/bin/bash
 envir=""
 sbash="source ~/.bashrc"
 n=${1:-1}

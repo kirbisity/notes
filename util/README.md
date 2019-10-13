@@ -18,7 +18,7 @@ A collection of useless scripts.
   * Example
     * `./avatar.sh darksouls`
 
-* #### avatar/data/*.txt
+* #### avatar/images/*.txt
 
   * The graphics files are under `data`
   * The first few lines define color
