@@ -1,0 +1,12 @@
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/CMakeFiles/rebuild_cache.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/CMakeFiles/edit_cache.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/CMakeFiles/test.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/src/CMakeFiles/rebuild_cache.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/src/CMakeFiles/edit_cache.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/src/CMakeFiles/test.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/src/CMakeFiles/DEMO.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/src/CMakeFiles/shapelib.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/test/CMakeFiles/rebuild_cache.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/test/CMakeFiles/edit_cache.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/test/CMakeFiles/test.dir
+/Users/yanlinzhu/dropbox/csplayground/notes/demo/cpp/build/test/CMakeFiles/TEST.dir

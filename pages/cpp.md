@@ -2,15 +2,29 @@
 
 [Back](../README.md)
 
-* [C and C++](#c-and-c++)
+[https://en.cppreference.com](https://en.cppreference.com/)
+
+### List of Contents
+
+C and C++
+
+* [Preprocessor Directives](#preprocessor-directives)
 * [Class](#class)
 * [Namespace](#namespace)
 * [Template](#template)
-* [Debug-checklist](#debug-checklist)
+* [Smart Pointer](#smart-pointer)
 
-## C and C++
+Testing
 
-#### Preprocessor directives
+* [Google Mock](#google-mock)
+
+Other
+
+* [Debug Checklist](#debug-checklist)
+
+  
+
+## Preprocessor directives
 
 * These are all done at preprocessor stage
 
@@ -99,7 +113,7 @@
 
   * Specifies implementation-defined instructions to the compiler
 
-[Back To Top](#cpp)
+[Back To Top](#c\+\+)
 
 ## Class
 
@@ -168,10 +182,22 @@
   * A base class pointer `Vehicle*` can refer to a derived `Car` instance
 
   * ```c++
-    Vehicle* foo() { return new Car; }
+    Vehicle* foo() { 
+      Car c;
+    return &c;
+    }
+    ```
+    
+  * The reverse is not true.
+
+  * If it is necessary to use a derived class pointer to point to base instance, use `dynamic_cast`
+
+    ```c++
+    Car* foo
+    <type> *p_subclass = dynamic_cast<<type> *>( p_obj );
     ```
 
-  * The reverse is not true.
+    
 
 * Base initialized before derived
 
@@ -222,8 +248,9 @@
 
 ## Namespace
 
-* Defines a container/scope.
+* Defines a container/scope
 * Mitigates name collision in large projects
+* Never use `using namespace` in header file
 
 #### Name space look-up
 
@@ -255,11 +282,13 @@
       }
     }
   }
-  
+
   class N1::N2::C {
       int x; // 4
   }
   ```
+
+* Ideally less than 5 nestings
 
 #### Namespace alias
 
@@ -293,6 +322,8 @@
 
 #### Function resolution in name
 
+* function resolution looks up name first
+
 * ```c++
   class Vehicle {
     public:
@@ -305,8 +336,6 @@
   Car c;
   c.setPrice(1); // will call Car::setPrice(float) even when type not match
   ```
-
-* function resolution looks up name first
 
 * name found in tighter scope `Car::setPrice` hides `Vehicle::setPrice` in base class
 
@@ -352,7 +381,203 @@ foo("a"); // print "default"
 
 [Back To Top](#cpp)
 
-## Debug checklist
+
+
+## Smart Pointer
+
+* Cannot be used as elements of a container
+* Difficult to use as class members
+* exception-safe
+
+#### Not smart raw Pointer
+
+* represent access to an object
+
+  ```c++
+  X* x_p = new X();
+  x_p->fun(); // if anything throws an exception before delete, memory leak
+  delete x_p;
+  ```
+
+#### std::unique_ptr\<T>
+
+* the **sole owner** of a memory resource
+
+* will hold a pointer and **delete** it in its destructor
+
+  ```c++
+  std::unique_ptr<X> x_p(new X());
+  std::unique_ptr<X> y_p(x_p); // y_p now owns the object, x_p no longer own anything
+  std::unique_ptr<X> z_p = y_p; // z_p now owns the object, y_p no longer own anything
+  (*z_p).fun(); // operator* can be used
+  z_p.reset(); // will destroy the object
+  ```
+
+* When a unique pointer is copy-constructed. The ownership will transfer and the original unique pointer points to nothing.
+
+* If the object should not be modified, use  `std::unique_ptr<const X>`
+
+* http://www.cplusplus.com/reference/memory/unique_ptr/
+
+
+
+Reference: https://www.fluentcpp.com/2017/08/25/knowing-your-smart-pointers/
+
+
+
+## Google Mock
+
+* In unit-testing, control the dependencies of the subject-under-test, so that external influences like network connectivity or database issues etc. will not affect test result.
+
+* Replace real components with doubles.
+
+* Doubles are often written as derived classes of the SUT class
+
+  ```C++
+  class SUTDouble : public SUT { ... }
+  
+  TEST() {
+    // GIVEN
+    SUTFake s;
+    // WHEN
+    s.fun(1);
+    // THEN
+    ASSERT ...;
+  }
+  ```
+
+* Types of doubles
+
+  * Dummy
+
+    * Be an argument to function just to let the test compile
+
+  * Stub
+
+    * Interact minimally, return the correct value
+
+      ```c++
+      class SUTStub : public SUT {
+        public:
+      	  int fun(int i) { return 10; }
+      }
+      ```
+
+  * Fake
+
+    * Contain fake data
+
+      ```c++
+      class SUTFake : public SUT {
+        public:
+      	  int fun(int i) { return d_date[i]; }
+        private:
+          vector<int> d_data;
+      }
+      ```
+
+  * Spy
+
+    * Observes the interaction and report it at the end of the test
+
+      ```C++
+      class SUTSpy : public SUT {
+        public:
+        vector<int> d_obervations;
+      	  int fun(int i) { 
+            d_obervations.push_back(i);
+            return d_date[i]; 
+          }
+        private:
+          vector<int> d_data;
+      }
+      ```
+
+  * Mock
+
+    * In the test, expectation will be made of how SUT will interact with mock
+
+      ```C++
+      class SUTMock : public SUT {
+        public:
+          MOCK_METHOD1(fun, int(int));
+      }
+      
+      //GIVEN
+      EXPECT_CALL(s, fun(1))
+        .WillOnce(Return(10));
+      ```
+
+* Google Mock Expectations
+
+  * Create mock class by inheriting from SUT class
+
+  * Use `MOCK_ …` macros
+
+  * Set up expectations using `EXPECT_CALL`
+
+  * Failure to meet expectations is failure
+
+  * Test the SUT, not the mock
+
+  * Example
+
+    ```c++
+    #include <gmock/gmock.h>
+    class SUTMock : public SUT {
+      public:
+        MOCK_METHOD1(fun, int(int));
+    }
+    ```
+
+* Matchers
+
+  * Decide when an expectation is met
+
+  * First matching expectation is matched. Not the most specific one.
+
+  * Matching order is from bottom-up. Reverse order of addition
+
+  * Example
+
+    ```c++
+    // GIVEN
+    EXPECT_CALL(s, )
+    ```
+
+* Cardinality & Actions
+
+  * Cardinalirt is the expectation of number of times matched
+
+  * Expectation do not retire automatically on saturation
+
+  * `WillOnce` connects the expectation with it's actions
+
+    ```c++
+    EXPECT_CALL(s, fun(_))
+      .Times(3)
+      .WillOnce(Return(4)) // for the first match, 4 will be returned
+      .WIllOnce(Return(5)) // for the second, 5
+      .WillOnce(Return(6)); // third, 6
+    ```
+
+  * `WillRepeatedly` expect the same action to be done repeatedly
+
+    ```c++
+    EXPECT_CALL(s, fun(_))
+      .Times(3)
+      .WillRepeatedly(Return(6))
+    ```
+
+  * `RetiresOnSaturation` remove an expectation when its cardinality limit is reached
+
+    
+
+
+
+
+
+## Debug Checklist
 
 
 

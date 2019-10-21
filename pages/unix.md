@@ -56,8 +56,8 @@ Basic commands and their commonly used options. Look up man for more info.
 
 * `ln`  hard link
 
-  * e.g. `ln f1 f3`  let f3 point to the same i-node as f1
-  * `* -s`  symbolic link, similar to short cut
+  * e.g. `ln f1 f3`  let f3 point to the same i-node as f1, f3 should not exist at the time
+  * `ln -s f1 f3`  symbolic link, similar to short cut. f3 is now a shortcut of f1.
 
 * `chmod`  change file mode
 
