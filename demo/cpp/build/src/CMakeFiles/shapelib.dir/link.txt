@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libshapelib.a  CMakeFiles/shapelib.dir/shape.cpp.o CMakeFiles/shapelib.dir/polygon.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libshapelib.a
