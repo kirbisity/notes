@@ -113,7 +113,7 @@ Other
 
   * Specifies implementation-defined instructions to the compiler
 
-[Back To Top](#c\+\+)
+[Back To Top](#list-of-contents)
 
 ## Class
 
@@ -244,13 +244,17 @@ Other
   class Car : public Vehicle, public Asset { ... }`
   ```
 
-[Back To Top](#cpp)
+[Back To Top](#list-of-contents)
 
 ## Namespace
 
 * Defines a container/scope
+
 * Mitigates name collision in large projects
+
 * Never use `using namespace` in header file
+
+  
 
 #### Name space look-up
 
@@ -351,7 +355,7 @@ Other
 
 * applies to all members, while `static` is only for functions and variables
 
-[Back To Top](#cpp)
+[Back To Top](#list-of-contents)
 
 ## Template
 
@@ -379,9 +383,7 @@ foo(5); // print "int"
 foo("a"); // print "default"
 ```
 
-[Back To Top](#cpp)
-
-
+[Back To Top](#list-of-contents)
 
 ## Smart Pointer
 
@@ -423,7 +425,7 @@ foo("a"); // print "default"
 
 Reference: https://www.fluentcpp.com/2017/08/25/knowing-your-smart-pointers/
 
-
+[Back To Top](#list-of-contents)
 
 ## Google Mock
 
@@ -571,11 +573,7 @@ Reference: https://www.fluentcpp.com/2017/08/25/knowing-your-smart-pointers/
 
   * `RetiresOnSaturation` remove an expectation when its cardinality limit is reached
 
-    
-
-
-
-
+[Back To Top](#list-of-contents)
 
 ## Debug Checklist
 
@@ -585,4 +583,4 @@ Undefined/Unresolved definition
 
 - [ ] Is the **order of #include** right ? Is there a need for **forward declaration** ?
 
-[Back To Top](#cpp)
+[Back To Top](#list-of-contents)

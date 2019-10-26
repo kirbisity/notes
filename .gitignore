@@ -1,1 +1,5 @@
+.DS_store
 *.swp
+*.o
+demo/cpp/build/*
+!demo/cpp/build/Makefile
