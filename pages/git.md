@@ -29,7 +29,7 @@ https://git-scm.com/
 
 * `git status`  show current repository information
 
-* `git commit`  commit to local repository
+* ##### `git commit`  commit to local repository
 
   * ```shell
     git commit -m "message" # add a commit message
@@ -43,7 +43,7 @@ https://git-scm.com/
 
 * `git checkout <commit hash> <file path>` revert a file to earlier commit
 
-#### Ignoring files
+##### Ignoring files
 
 * Create a `.gitignore`  at the **root of the repository** with information about the ignorable files
 
@@ -61,12 +61,29 @@ https://git-scm.com/
   !folder/vipfolder/.gitkeep
   ```
 
-#### Removing a file
+##### Removing a file
 
 * `rm`  removes a file from the working directory only
 * `git rm`  removes a file from the index and working directory
 * `git rm`  --cached  removes a file from the index only
 * `git rm -f`  removes a file from the index and working directory even if there are unstaged changes
+
+##### Undo an add
+
+* `git reset HEAD <file>`  Undo a git add
+
+##### Undo a unshared commit
+
+* `git reset`  undo local changes that have not yet been shared
+* `git reset --hard` will also undo the changes in the working directory 
+
+##### Undo a shared commit
+
+* `git revert`  revert changes that have already been shared
+* `git revert HEAD`  reverses the latest commit
+* `git revert` will create a new commit
+
+
 
 [Back To Top](#list-of-contents)
 
