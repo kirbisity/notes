@@ -8,6 +8,7 @@ https://git-scm.com/
 
 * [Basic commands](#basic-commands)
 * [Rebase workflow](#rebase-workflow)
+* [Submodule](#submodule)
 * [Sample workflow](#sample-workflow)
 
 ## Git concept
@@ -126,6 +127,20 @@ The following example assumes you work on a forked repository and made some chan
 
 * `git rebase -i`  starts an interactive rebasing session
   * fixup redundant commits together, or rename etc.
+
+[Back To Top](#list-of-contents)
+
+## Submodule
+
+https://git-scm.com/book/en/v2/Git-Tools-Submodules
+
+Used when we need to include flies from another repository.
+
+* `git submodule add <repo link> <folder name>`
+  * after this a `.gitmodules` folder will be created
+  * The content might be in side the folder, if not, run `git submodule update --init --recursive`
+* Pull in upstream changes from the submodule remote  `git submodule update —remote <branch>`
+* To clone a repository with submodules, use `git clone --recurse-submodules <repo link>`
 
 [Back To Top](#list-of-contents)
 
