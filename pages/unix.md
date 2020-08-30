@@ -29,6 +29,11 @@ Basic commands and their commonly used options. Look up man for more info.
   * `-d`  list directory without contents
   * `-a`  list hidden files
 
+* `du` list estimated disk space usage.
+
+  * `-s`  Omit subdirectory sizes
+  * `-h`  Print in kb, mb.
+
 * cat  read file and writes to output
 
 * echo  output argument string to destination

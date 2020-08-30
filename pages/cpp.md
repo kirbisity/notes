@@ -13,6 +13,13 @@ C and C++
 * [Namespace](#namespace)
 * [Template](#template)
 * [Smart Pointer](#smart-pointer)
+* [Lambda Function](#lambda-function)
+* [Multi-threading](#multi-threading)
+
+Build Systems
+
+* [Compiled Libraies](#compiled-libraries)
+* [CMake Commands](#cmake-commands)
 
 Testing
 
@@ -22,7 +29,6 @@ Other
 
 * [Debug Checklist](#debug-checklist)
 
-  
 
 ## Preprocessor directives
 
@@ -286,7 +292,6 @@ Other
       }
     }
   }
-
   class N1::N2::C {
       int x; // 4
   }
@@ -421,9 +426,89 @@ foo("a"); // print "default"
 
 * http://www.cplusplus.com/reference/memory/unique_ptr/
 
-
-
 Reference: https://www.fluentcpp.com/2017/08/25/knowing-your-smart-pointers/
+
+[Back To Top](#list-of-contents)
+
+## Lambda Functions
+
+* Syntax
+
+  * With parameters
+
+  * ```c++
+    auto glambda = [](auto a, auto&& b) { return a < b; };
+    bool b = glambda(3, 3.14);
+    ```
+
+  * With parameter packs
+
+    * This will be useful in function decorators.
+
+  * ```c++
+    auto f = []<typename ...Ts>(Ts&& ...ts) {
+       return foo(std::forward<Ts>(ts)...);
+    };
+    ```
+
+* Parameter
+
+  * Use `template <class... args>` to pack any types and number of arguments.
+  * Use `&&` to pass parameters by reference.
+
+* `[ captures ]`
+
+  * `&` means "capture by reference". `this` pointer is always captured by value. `[&](){}`
+  * `=` means "capture by value". `[=](){}`
+
+Reference: [cppreference](https://en.cppreference.com/w/cpp/language/lambda)
+
+[Back To Top](#list-of-contents)
+
+## Multi-threading
+
+* Static variables are shared across threads, may run into race condition
+* Never have a pointer to stack variables.
+
+* `Atomic<type>` variables are generally thread safe, but assignment is not.
+* If there is singleton used, better to join all child threads before main exits.
+* The getInstance() method of a singleton need to be synchronized for multithreaded environment.
+
+[Back To Top](#list-of-contents)
+
+
+## Compiled Libraies
+There are two Linux C/C++ library types. Static libraries (.a) and dynamic libraries (.so)
+
+`nm <binary>`  to check symbols of a static library.
+`ldd <binary>` to check dynamic dependency (.so dependency) of a static library.
+
+### Static libraries (.a)
+
+ * A library that is merged into the actual program itself at build time. The symbols are combined and lib name discarded. Use `nm` to see all symbols.
+ * The library must be present at **compile time**.
+ * header files (.h) are not embedded into static libraries (.a). That's the reason why c++ templates is possible (compiled not with the library, but with the final binary where template types are determined). It also means header file resolution is also deferred to when the final binary is built.
+
+### Dynamically linked shared object libraries (.so)
+
+  * A library that is automatically linked into a program when the program starts, and exists as a standalone file. Use `ldd` to see all dynamic dependencies.
+  * The library must be present at **compile time**, and when the application starts (**run-time**).
+
+Shared object libraries (.so) can be used in two ways.
+ * Dynamically linked at run time but statically aware. The libraries must be available during compile/link phase for the linker. The shared objects are not included into the executable component but are tied to the execution.
+ * Dynamically loaded/unloaded and linked during execution (i.e. browser plug-in) using the dynamic linking loader system functions.
+
+To instruct executable where to find these .so at run-time.
+ * `$LD_LIBRARY_PATH <binary>`
+ * In CMake. `INSTALL_RPATH` property on the target.
+
+[Back To Top](#list-of-contents)
+
+
+## CMake Commands
+* `INSTALL_RPATH` set the search path for run-time dependency (.so).
+ * `set_property(Target ${<target>} APPEND PROPERTY INSTALL_RPATH “${<search path>}”)`
+
 
 [Back To Top](#list-of-contents)
 
@@ -577,10 +662,30 @@ Reference: https://www.fluentcpp.com/2017/08/25/knowing-your-smart-pointers/
 
 ## Debug Checklist
 
+### Compiler Errors
 
+`Undefined/Unresolved definition`
 
-Undefined/Unresolved definition
+- Is the **order of #include** right ? Is there a need for **forward declaration** ?
 
-- [ ] Is the **order of #include** right ? Is there a need for **forward declaration** ?
+`Undefined vtable for base class`
+
+* virtual function has no implementation
+
+`Use of deleted function`
+
+* in the copy constructor, some members are not copy constructible.
+
+### CMake Errors
+
+`Undefined reference to pthread_create`
+
+* The dependency name does not exist
+
+Run-time Errors
+
+`Cannot open shared object file`
+
+* The dynamic dependency is not found. Use `ldd` to examine dynamic dependencies. Set `LD_LIBRARY_PATH` before running binary to manually set the run-time search path for the dynamic dependencies, or better off set it correctly when building the binary.
 
 [Back To Top](#list-of-contents)

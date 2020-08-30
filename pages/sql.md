@@ -53,7 +53,7 @@ Copy data from source into a destination system.
   - ```sql
      SELECT c.CountryID
      FROM Countries as c
-    ```
+     ```
 
 - Use ANSI-Standard Join clauses instead of the old style joins.
 
