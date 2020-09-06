@@ -46,6 +46,19 @@ Other
     #include <car.h>
     ```
 
+  * Use `-I` option when compiling to specify search path for includes.
+
+  * Search path for `#include` when using relative path.
+
+    * `#include <header_name>`
+      1. Look in `<directory>`  if  `-l<directory>` is specified when compiling.
+      2. Look in system include paths (`.../include`).
+    * `#include "header_name". `
+      1. Look in current directory.
+      2. Look in `<directory>`  if  `-l<directory>` is specified when compiling.
+      3. Look in system include paths (`.../include`).
+    * When using absolute path name, `<>`  and `""`  has no difference.
+
 * ##### # define
 
   * Used for undefining a macro
@@ -670,11 +683,16 @@ To instruct executable where to find these .so at run-time.
 
 `Undefined vtable for base class`
 
-* virtual function has no implementation
+* Virtual function has no implementation
 
 `Use of deleted function`
 
-* in the copy constructor, some members are not copy constructible.
+* In the copy constructor, some members are not copy constructible.
+
+`mutiple definition of`
+
+* Missing `#ifndef #define #endif` in header file.
+* Function implemented in the header file doesn't have `inline`  to allow mutiple definition.
 
 ### CMake Errors
 
