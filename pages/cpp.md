@@ -224,6 +224,8 @@ Other
 
 * Compiler provide copy constructer and assignment operator for base first
 
+* Base class need virtual destructor otherwise base won't be deleted.
+
 #### Public, protected and private
 
 * **public:** accessible to all classes
@@ -485,7 +487,7 @@ Reference: [cppreference](https://en.cppreference.com/w/cpp/language/lambda)
 
 * `Atomic<type>` variables are generally thread safe, but assignment is not.
 * If there is singleton used, better to join all child threads before main exits.
-* The getInstance() method of a singleton need to be synchronized for multithreaded environment.
+* The `getInstance()` method of a singleton need to be synchronized for multithreaded environment.
 
 [Back To Top](#list-of-contents)
 
@@ -699,6 +701,10 @@ To instruct executable where to find these .so at run-time.
 `Undefined reference to pthread_create`
 
 * The dependency name does not exist
+
+`Undefined reference to <something>`
+
+* Did not link in static .a lib. Need to include in dependency.
 
 Run-time Errors
 
