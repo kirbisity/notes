@@ -1,6 +1,5 @@
 #!/bin/bash
 envir=""
-sbash="source ~/.bashrc"
 n=${1:-1}
 argcm=${2:-""}
 
@@ -34,7 +33,6 @@ let i=0
 while [ $i -lt $n ];
 do
 	tmux send-keys -t $i "$envir" C-m
-	tmux send-keys -t $i "$sbash" C-m
 	color=`expr 41 + $i % 6`	
 	tmux send-keys -t $i "echo -e \"\e[${color}mThis is panel ${i}! \e[0m\"" C-m
 	path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/avatar/avatar.sh"
