@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(demo)
+project(oodesign)
 
 set (CMAKE_CXX_STANDARD 11)
 
