@@ -8,4 +8,3 @@
 * [SQL](pages/sql.md)
 * [Open Source Technologies](pages/opensourcetech.md)
 * [Docker](pages/docker.md)
-
