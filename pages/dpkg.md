@@ -71,9 +71,9 @@
 
 * `Depends`
 
-  * List packages required for the package to function.
+  * List packages required for the package to function, so is inherited.
   * Takes effect only when a package is to be configured.
-  * A package will not be configured unless all of the packages listed in its `Depends` field have been correctly configured. i.e. The packages under `Depends` would be installed first then the target package. 
+  * A package will not be configured unless all of the packages listed in its `Depends` field have been correctly configured. i.e. The packages under `Depends` would be installed first then the target package.
 
 * Dependencies
 

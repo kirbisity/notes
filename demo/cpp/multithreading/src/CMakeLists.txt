@@ -1,0 +1,1 @@
+add_executable(mtmain main.cpp)

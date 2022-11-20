@@ -136,6 +136,9 @@ Other
 
 ## Class
 
+#### Best Practices
+* Destructor should never have exception. 
+
 #### Inheritance
 
 * Model is-a-kind-of relationships
@@ -482,12 +485,17 @@ Reference: [cppreference](https://en.cppreference.com/w/cpp/language/lambda)
 
 ## Multi-threading
 
-* Static variables are shared across threads, may run into race condition
+* Always assume code will be used by multi-threaded programs
+* Static variables are shared across threads
+* Static/shared + mutable = race condition, use locks for read and write
+* Threads have their own stack but share the heap
 * Never have a pointer to stack variables.
 
 * `Atomic<type>` variables are generally thread safe, but assignment is not.
-* If there is singleton used, better to join all child threads before main exits.
 * The `getInstance()` method of a singleton need to be synchronized for multithreaded environment.
+* 
+
+* If there is singleton used, better to join all child threads before main exits.
 
 [Back To Top](#list-of-contents)
 
